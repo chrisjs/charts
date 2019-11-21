@@ -69,6 +69,20 @@ If you only need to deploy streams, tasks and schedules can be disabled:
 
 NOTE: Both `features.streaming.enabled` and `features.batch.enabled` should not be set to `false` at the same time.
 
+Applications and tasks can be monitored through Prometheus and Grafana. To deploy these components and enable monitoring, set the following:
+
+`--set features.monitoring.enabled=true`
+
+When using Minikube, the Grafana URL can be obtained for example, via:
+
+`minikube service my-release-grafana --url`
+
+On a platform that provides a LoadBalancer such as GKE, the following can be checked against until the `EXTERNAL-IP` field is populated with the assigned load balancer IP:
+
+`kubectl get svc my-release-grafana`
+
+See the Grafana table below for default credentials and override parameters.
+
 ## Configuration
 
 The following tables list the configurable parameters and their default values.
@@ -90,7 +104,7 @@ The following tables list the configurable parameters and their default values.
 
 | Parameter                         | Description                                                        | Default          |
 | --------------------------------- | ------------------------------------------------------------------ | ---------------- |
-| server.version                    | The version/tag of the Data Flow server                            | 2.2.2.RELEASE
+| server.version                    | The version/tag of the Data Flow server                            | 2.3.0.RC1
 | server.imagePullPolicy            | The imagePullPolicy of the Data Flow server                        | IfNotPresent
 | server.service.type               | The service type for the Data Flow server                          | LoadBalancer
 | server.service.annotations        | Extra annotations for service resource                             | {}
@@ -104,7 +118,7 @@ The following tables list the configurable parameters and their default values.
 
 | Parameter                         | Description                                                      | Default          |
 | --------------------------------- | ---------------------------------------------------------------- | ---------------- |
-| skipper.version                   | The version/tag of the Skipper server                            | 2.1.3.RELEASE
+| skipper.version                   | The version/tag of the Skipper server                            | 2.2.0.RC1
 | skipper.imagePullPolicy           | The imagePullPolicy of the Skipper server                        | IfNotPresent
 | skipper.platformName              | The name of the configured platform account                      | default
 | skipper.service.type              | The service type for the Skipper server                          | ClusterIP
@@ -171,4 +185,31 @@ The following tables list the configurable parameters and their default values.
 | ---------------------------- | --------------------------------------- | ------------------------- |
 | features.streaming.enabled   | Enables or disables streams             | true
 | features.batch.enabled       | Enables or disables tasks and schedules | true
+| features.monitoring.enabled  | Enables or disables monitoring          | false
 
+### Grafana
+
+| Parameter                            | Description                                                  | Default                    |
+| ------------------------------------ | ------------------------------------------------------------ | -------------------------- |
+| grafana.service.type                 | Service type to use                                          | LoadBalancer
+| grafana.admin.existingSecret         | Existing Secret to use for login credentials                 | scdf-grafana-secret
+| grafana.admin.userKey                | Secret userKey field                                         | admin-user
+| grafana.admin.passwordKey            | Secret passwordKey field                                     | admin-password
+| grafana.admin.defaultUsername        | The default base64 encoded login username used in the secret | admin
+| grafana.admin.defaultPassword        | The default base64 encoded login password used in the secret | password
+| grafana.extraConfigmapMounts         | ConfigMap mount for datasources                              | scdf-grafana-ds-cm
+| grafana.dashboardProviders           | Dashboard provider for imported dashboards                   | default
+| grafana.dashboards                   | Dashboards to auto import                                    | SCDF Apps, Streams & Tasks
+
+### Prometheus
+| Parameter                                    | Description                                        | Default                                |
+| -------------------------------------------- | -------------------------------------------------- | -------------------------------------- |
+| prometheus.server.global.scrape_interval     | Scrape interval                                    | 10s
+| prometheus.server.global.scrape_timeout      | Scrape timeout                                     | 9s
+| prometheus.server.global.evaluation_interval | Evaluation interval                                | 10s
+| prometheus.extraScrapeConfigs                | Additional scrape configs for proxied applications | `proxied-applications` & `proxies` jobs
+| prometheus.podSecurityPolicy                 | Enable or disable PodSecurityContext               | true
+| prometheus.alertmanager                      | Enable or disable alert manager                    | false
+| prometheus.kubeStateMetrics                  | Enable or disable kube state metrics               | false
+| prometheus.nodeExporter                      | Enable or disable node exporter                    | false
+| prometheus.pushgateway                       | Enable or disable push gateway                     | false
