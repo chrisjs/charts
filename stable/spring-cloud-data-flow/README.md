@@ -1,8 +1,8 @@
 # Spring Cloud Data Flow Chart
 
-[Spring Cloud Data Flow](http://cloud.spring.io/spring-cloud-dataflow/) is a toolkit for building data integration and real-time data processing pipelines.
+[Spring Cloud Data Flow](https://cloud.spring.io/spring-cloud-dataflow/) is a toolkit for building data integration and real-time data processing pipelines.
 
-Pipelines consist of [Spring Boot](http://projects.spring.io/spring-boot/) apps, built using the [Spring Cloud Stream](http://cloud.spring.io/spring-cloud-stream/) or [Spring Cloud Task](http://cloud.spring.io/spring-cloud-task/) microservice frameworks. This makes Spring Cloud Data Flow suitable for a range of data processing use cases, from import/export to event streaming and predictive analytics.
+Pipelines consist of [Spring Boot](https://projects.spring.io/spring-boot/) apps, built using the [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) or [Spring Cloud Task](https://cloud.spring.io/spring-cloud-task/) microservice frameworks. This makes Spring Cloud Data Flow suitable for a range of data processing use cases, from import/export to event streaming and predictive analytics.
 
 ## Chart Details
 This chart will provision a fully functional and fully featured Spring Cloud Data Flow installation
@@ -10,7 +10,7 @@ that can deploy and manage data processing pipelines in the cluster that it is d
 
 Either the default MySQL deployment or an external database can be used as the data store for Spring Cloud Data Flow state and either RabbitMQ or Kafka can be used as the messaging layer for streaming apps to communicate with one another.
 
-For more information on Spring Cloud Data Flow and its capabilities, see it's [documentation](http://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).
+For more information on Spring Cloud Data Flow and its capabilities, see it's [documentation](https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/).
 
 ## Prerequisites
 
